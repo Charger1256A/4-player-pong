@@ -5,18 +5,20 @@ pygame.init()
 
 # Set up screen
 screen = pygame.display.set_mode((900, 600))
+
 # Paddle positions
 paddle_1X = 555
 paddle_2Y = 250
 paddle_3X = 555
 paddle_4Y = 250
 
+# Fonts
 title_font = pygame.font.Font('freesansbold.ttf', 64)
 button_font = pygame.font.Font('freesansbold.ttf', 14)
 
 
 
-
+# Main menu
 def intro():
     run = True
     while run:
@@ -62,71 +64,65 @@ def intro():
         pygame.display.update()
 
 
+def draw_game_background():
+    game_background = pygame.Rect(300, 0, 600, 600)
+    pygame.draw.rect((screen), (0, 0, 0), game_background)
+
+def draw_paddles():
+    global paddle_1X, paddle_2Y, paddle_3X, paddle_4Y
+    paddle_1 = pygame.Rect(paddle_1X, 20, 90, 15)
+    paddle_2 = pygame.Rect(320, paddle_2Y, 15, 90)
+    paddle_3 = pygame.Rect(paddle_3X, 560, 90, 15)
+    paddle_4 = pygame.Rect(860, paddle_4Y, 15, 90)
+    pygame.draw.rect(screen, (255, 0, 0), paddle_1)
+    pygame.draw.rect(screen, (0, 255, 0), paddle_2)
+    pygame.draw.rect(screen, (0, 0, 255), paddle_3)
+    pygame.draw.rect(screen, (255, 255, 0), paddle_4)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a:
+                paddle_1X -= 20
+            if event.key == pygame.K_d:
+                paddle_1X += 20
+            if event.key == pygame.K_ESCAPE:
+                paddle_2Y -= 20
+            if event.key == pygame.K_BACKQUOTE:
+                paddle_2Y += 20
+            if event.key == pygame.K_LEFT:
+                paddle_3X -= 20
+            if event.key == pygame.K_RIGHT:
+                paddle_3X += 20
+            if event.key == pygame.K_o:
+                paddle_4Y -= 20
+            if event.key == pygame.K_l:
+                paddle_4Y += 20
+            if event.key == pygame.K_b:
+                intro()
+
+        if paddle_1X + 90 > 900:
+            paddle_1X = 810
+        if paddle_1X < 300:
+            paddle_1X = 300
+        if paddle_2Y + 90 > 600:
+            paddle_2Y = 510
+        if paddle_2Y < 0:
+            paddle_2Y = 0
+        if paddle_3X + 90 > 900:
+            paddle_3X = 810
+        if paddle_3X < 300:
+            paddle_3X = 300
+        if paddle_4Y + 90 > 600:
+            paddle_4Y = 510
+        if paddle_4Y < 0:
+            paddle_4Y = 0
 
 
 
 # Game loop
 def main():
-
-    def draw_game_background():
-        game_background = pygame.Rect(300, 0, 600, 600)
-        pygame.draw.rect((screen), (0, 0, 0), game_background)
-
-    def draw_paddles():
-        global paddle_1X, paddle_2Y, paddle_3X, paddle_4Y
-        paddle_1 = pygame.Rect(paddle_1X, 20, 90, 15)
-        paddle_2 = pygame.Rect(320, paddle_2Y, 15, 90)
-        paddle_3 = pygame.Rect(paddle_3X, 560, 90, 15)
-        paddle_4 = pygame.Rect(860, paddle_4Y, 15, 90)
-        pygame.draw.rect(screen, (255, 0, 0), paddle_1)
-        pygame.draw.rect(screen, (0, 255, 0), paddle_2)
-        pygame.draw.rect(screen, (0, 0, 255), paddle_3)
-        pygame.draw.rect(screen, (255, 255, 0), paddle_4)
-
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a:
-                    paddle_1X -= 20
-                if event.key == pygame.K_d:
-                    paddle_1X += 20
-                if event.key == pygame.K_ESCAPE:
-                    paddle_2Y -= 20
-                if event.key == pygame.K_BACKQUOTE:
-                    paddle_2Y += 20
-                if event.key == pygame.K_LEFT:
-                    paddle_3X -= 20
-                if event.key == pygame.K_RIGHT:
-                    paddle_3X += 20
-                if event.key == pygame.K_o:
-                    paddle_4Y -= 20
-                if event.key == pygame.K_l:
-                    paddle_4Y += 20
-                if event.key == pygame.K_q:
-                    pygame.quit()
-                if event.key == pygame.K_b:
-                    intro()
-
-            if paddle_1X + 90 > 900:
-                paddle_1X = 810
-            if paddle_1X < 300:
-                paddle_1X = 300
-            if paddle_2Y + 90 > 600:
-                paddle_2Y = 510
-            if paddle_2Y < 0:
-                paddle_2Y = 0
-            if paddle_3X + 90 > 900:
-                paddle_3X = 810
-            if paddle_3X < 300:
-                paddle_3X = 300
-            if paddle_4Y + 90 > 600:
-                paddle_4Y = 510
-            if paddle_4Y < 0:
-                paddle_4Y = 0
-
-
-
-
-
 
     running = True
     while running:
@@ -135,15 +131,35 @@ def main():
         draw_game_background()
         draw_paddles()
 
+        # Back button
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
 
-        # Move paddles
+        if 205 > mouse[0] > 90 and 110 > mouse[1] > 50:
+            back_button_light = pygame.Rect(95, 50, 110, 60)
+            pygame.draw.rect(screen, (0, 0, 255), back_button_light)
+            if click[0] == 1:
+                intro()
+        else:
+            back_button_normal = pygame.Rect(95, 50, 110, 60)
+            pygame.draw.rect(screen, (0, 0, 200), back_button_normal)
+
+        back_button_font = pygame.font.Font('freesansbold.ttf', 20)
+        back_button_text = back_button_font.render("Back", True, (0, 0, 0))
+        screen.blit(back_button_text, (123, 73))
+
+
+
+
+
+
 
 
         # update screen
         pygame.display.update()
 
 intro()
-main()
+
 
 
 
