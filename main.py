@@ -33,6 +33,12 @@ def intro():
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
+        button1_border = pygame.Rect(210, 385, 140, 90)
+        pygame.draw.rect(screen, (0, 0, 255), button1_border)
+
+        button2_border = pygame.Rect(535, 385, 140, 90)
+        pygame.draw.rect(screen, (0, 0, 255), button2_border)
+
         if 335 > mouse[0] > 225 and 460 > mouse[1] > 400:
             button_1_light = pygame.Rect(225, 400, 110, 60)
             pygame.draw.rect(screen, (0, 255, 0), button_1_light)
@@ -80,25 +86,43 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
-                    paddle_1X -= 10
+                    paddle_1X -= 20
                 if event.key == pygame.K_d:
-                    paddle_1X += 10
+                    paddle_1X += 20
                 if event.key == pygame.K_ESCAPE:
-                    paddle_2Y -= 10
+                    paddle_2Y -= 20
                 if event.key == pygame.K_BACKQUOTE:
-                    paddle_2Y += 10
+                    paddle_2Y += 20
                 if event.key == pygame.K_LEFT:
-                    paddle_3X -= 10
+                    paddle_3X -= 20
                 if event.key == pygame.K_RIGHT:
-                    paddle_3X += 10
+                    paddle_3X += 20
                 if event.key == pygame.K_o:
-                    paddle_4Y -= 10
+                    paddle_4Y -= 20
                 if event.key == pygame.K_l:
-                    paddle_4Y += 10
+                    paddle_4Y += 20
                 if event.key == pygame.K_q:
                     pygame.quit()
                 if event.key == pygame.K_b:
                     intro()
+
+            if paddle_1X + 90 > 900:
+                paddle_1X = 810
+            if paddle_1X < 300:
+                paddle_1X = 300
+            if paddle_2Y + 90 > 600:
+                paddle_2Y = 510
+            if paddle_2Y < 0:
+                paddle_2Y = 0
+            if paddle_3X + 90 > 900:
+                paddle_3X = 810
+            if paddle_3X < 300:
+                paddle_3X = 300
+            if paddle_4Y + 90 > 600:
+                paddle_4Y = 510
+            if paddle_4Y < 0:
+                paddle_4Y = 0
+
 
 
 
@@ -110,6 +134,7 @@ def main():
         screen.fill((128, 128, 128))
         draw_game_background()
         draw_paddles()
+
 
         # Move paddles
 
