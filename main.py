@@ -118,7 +118,7 @@ def draw_paddles():
         if paddle_4Y < 0:
             paddle_4Y = 0
 
-def how_to_play_screen_text(font_size, x, y, text, color):
+def text(font_size, x, y, text, color):
     text_font = pygame.font.Font('freesansbold.ttf', font_size)
     text = text_font.render(text, True, color)
     screen.blit(text, (x, y))
@@ -131,27 +131,61 @@ def how_to_play_screen():
             if event.type == pygame.QUIT:
                 pygame.quit()
 
-        how_to_play_screen_text(32, 50, 80, "Objective:", (255,255,255))
-        how_to_play_screen_text(16, 50, 120, "This game is like normal pong,", (255,255,255))
-        how_to_play_screen_text(16, 50, 140, "except that there are four players.", (255, 255, 255))
-        how_to_play_screen_text(16, 50, 160, "Each player starts out with 10 points.", (255, 255, 255))
-        how_to_play_screen_text(16, 50, 180, "If the ball goes out, the player's who's", (255, 255, 255))
-        how_to_play_screen_text(16, 50, 200, "side it went out on loses a point", (255, 255, 255))
-        how_to_play_screen_text(16, 50, 220, "Then the round ends and the ball will ", (255, 255, 255))
-        how_to_play_screen_text(16, 50, 240, "reapper on the center of the screen.", (255, 255, 255))
-        how_to_play_screen_text(16, 50, 260, "At the end of 10 rounds whoever as the most points wins", (255, 255, 255))
+        text(32, 50, 80, "Objective:", (255,255,255))
+        text(16, 50, 120, "This game is like normal pong,", (255,255,255))
+        text(16, 50, 140, "except that there are four players.", (255, 255, 255))
+        text(16, 50, 160, "Each player starts out with 10 points.", (255, 255, 255))
+        text(16, 50, 180, "If the ball goes out, the player's who's", (255, 255, 255))
+        text(16, 50, 200, "side it went out on loses a point", (255, 255, 255))
+        text(16, 50, 220, "Then the round ends and the ball will ", (255, 255, 255))
+        text(16, 50, 240, "reapper on the center of the screen.", (255, 255, 255))
+        text(16, 50, 260, "At the end of 10 rounds whoever as the most points wins", (255, 255, 255))
         
 
         pygame.display.update()
+ball_x = 600
+ball_y = 500
+ball_dx = 10
+ball_dy = 10
+
+
+
+
 # Game loop
 def main():
-
+    global ball_dx, ball_dy, paddle_1X, ball_x, ball_y
     running = True
     while running:
         # Background Color
         screen.fill((128, 128, 128))
         draw_game_background()
         draw_paddles()
+        pygame.draw.circle(screen, (255, 255, 255), [ball_x, ball_y], 10)
+        ball_x = ball_x + ball_dx
+        ball_y = ball_y - ball_dy
+
+        if paddle_1X < ball_x < paddle_1X + 100 and ball_y == 30:
+            ball_y = ball_y + 20
+            ball_dy *= -1
+
+        if paddle_2Y < ball_y < paddle_2Y + 100 and ball_x == 330:
+            ball_x = ball_x + 20
+            ball_dx *= -1
+
+        if paddle_3X < ball_x < paddle_3X + 100 and ball_y == 560:
+            ball_y = ball_y - 20
+            ball_dy *= -1
+
+        if paddle_4Y < ball_y < paddle_4Y + 100 and ball_x == 860:
+            ball_x = ball_x - 20
+            ball_dx *= -1
+
+
+
+
+
+
+
 
         # Back button
         mouse = pygame.mouse.get_pos()
@@ -161,6 +195,8 @@ def main():
             back_button_light = pygame.Rect(95, 50, 110, 60)
             pygame.draw.rect(screen, (0, 0, 255), back_button_light)
             if click[0] == 1:
+                ball_x = 600
+                ball_y = 500
                 intro()
         else:
             back_button_normal = pygame.Rect(95, 50, 110, 60)
