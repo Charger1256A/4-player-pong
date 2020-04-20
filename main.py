@@ -16,18 +16,14 @@ paddle_4Y = 250
 title_font = pygame.font.Font('freesansbold.ttf', 64)
 button_font = pygame.font.Font('freesansbold.ttf', 14)
 
-
-
 # Main menu
 def intro():
-    run = True
-    while run:
+    runnning = True
+    while runnning:
         screen.fill((128, 128, 128))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-
-
 
         title = title_font.render("Welcome to 4 Player Pong", True, (0, 0, 0))
         screen.blit(title, (40, 250))
@@ -41,6 +37,7 @@ def intro():
         button2_border = pygame.Rect(535, 385, 140, 90)
         pygame.draw.rect(screen, (0, 0, 255), button2_border)
 
+
         if 335 > mouse[0] > 225 and 460 > mouse[1] > 400:
             button_1_light = pygame.Rect(225, 400, 110, 60)
             pygame.draw.rect(screen, (0, 255, 0), button_1_light)
@@ -52,6 +49,8 @@ def intro():
         if 660 > mouse[0] > 550 and 460 > mouse[1] > 400:
             button_2_light = pygame.Rect(550, 400, 110, 60)
             pygame.draw.rect(screen, (255, 0, 0), button_2_light)
+            if click[0] == 1:
+                how_to_play_screen()
         else:
             button_2_normal = pygame.Rect(550, 400, 110, 60)
             pygame.draw.rect(screen, (200, 0, 0), button_2_normal)
@@ -119,8 +118,31 @@ def draw_paddles():
         if paddle_4Y < 0:
             paddle_4Y = 0
 
+def how_to_play_screen_text(font_size, x, y, text, color):
+    text_font = pygame.font.Font('freesansbold.ttf', font_size)
+    text = text_font.render(text, True, color)
+    screen.blit(text, (x, y))
 
+def how_to_play_screen():
+    running = True
+    while running:
+        screen.fill((128,128,128))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
 
+        how_to_play_screen_text(32, 50, 80, "Objective:", (255,255,255))
+        how_to_play_screen_text(16, 50, 120, "This game is like normal pong,", (255,255,255))
+        how_to_play_screen_text(16, 50, 140, "except that there are four players.", (255, 255, 255))
+        how_to_play_screen_text(16, 50, 160, "Each player starts out with 10 points.", (255, 255, 255))
+        how_to_play_screen_text(16, 50, 180, "If the ball goes out, the player's who's", (255, 255, 255))
+        how_to_play_screen_text(16, 50, 200, "side it went out on loses a point", (255, 255, 255))
+        how_to_play_screen_text(16, 50, 220, "Then the round ends and the ball will ", (255, 255, 255))
+        how_to_play_screen_text(16, 50, 240, "reapper on the center of the screen.", (255, 255, 255))
+        how_to_play_screen_text(16, 50, 260, "At the end of 10 rounds whoever as the most points wins", (255, 255, 255))
+        
+
+        pygame.display.update()
 # Game loop
 def main():
 
@@ -147,13 +169,6 @@ def main():
         back_button_font = pygame.font.Font('freesansbold.ttf', 20)
         back_button_text = back_button_font.render("Back", True, (0, 0, 0))
         screen.blit(back_button_text, (123, 73))
-
-
-
-
-
-
-
 
         # update screen
         pygame.display.update()
