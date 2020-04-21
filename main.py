@@ -151,9 +151,9 @@ def how_to_play_screen():
     # paddle_1_score = 10
 
 ball_x = 600
-ball_y = 500
-ball_dx = 10
-ball_dy = 10
+ball_y = 450
+ball_dx = -10
+ball_dy = -10
 
 
 
@@ -181,70 +181,156 @@ def main():
         ball_x = ball_x + ball_dx
         ball_y = ball_y - ball_dy
 
-        print(paddle_1X)
-        print(ball_x)
-        if paddle_1X < ball_x < paddle_1X + 50 and ball_y == 40:
-            ball_y = ball_y + 20
-            ball_dy *= -1
 
-        if paddle_1X + 50 < ball_x < paddle_1X + 100 and ball_y == 40:
-            if ball_dy > 0:
-                ball_x += 20
+        if ball_dx > 0 and ball_dy > 0:
+            if paddle_1X < ball_x < paddle_1X + 50 and ball_y == 30:
                 ball_y += 20
-                ball_dy *= -1
+                ball_x -= 20
                 ball_dx *= -1
-            else:
+                ball_dy *= -1
+            elif paddle_1X + 50 <= ball_x <= paddle_1X + 100 and ball_y == 30:
+                ball_y += 20
+                ball_x += 20
+                ball_dx *= 1
+                ball_dy *= -1
+            if paddle_4Y < ball_y < paddle_4Y + 50 and ball_x == 860:
+                ball_x -= 20
+                ball_dx *= -1
+                ball_dy *= 1
+            elif paddle_4Y + 50 < ball_y < paddle_4Y + 100 and ball_x == 860:
                 ball_x -= 20
                 ball_y += 20
-                ball_dy *= -1
                 ball_dx *= -1
-
-
-
-        if paddle_2Y < ball_y < paddle_2Y + 100 and ball_x == 330:
-            ball_x = ball_x + 20
-            ball_dx *= -1
-
-        if paddle_3X < ball_x < paddle_3X + 50 and ball_y == 560:
-            ball_y = ball_y - 20
-            ball_dy *= -1
-
-        if paddle_3X + 50 < ball_x < paddle_3X + 100 and ball_y == 560:
-            if ball_dy > 0:
-                ball_x += 20
-                ball_y -= 20
                 ball_dy *= -1
-                ball_dx *= -1
-            else:
+
+        elif ball_dx > 0 and ball_dy < 0:
+            if paddle_3X < ball_x < paddle_3X + 50 and ball_y == 560:
                 ball_x -= 20
                 ball_y -= 20
-                ball_dy *= -1
                 ball_dx *= -1
+                ball_dy *= -1
+            elif paddle_3X + 50 <= ball_x < paddle_3X + 100 and ball_y == 560:
+                ball_x += 20
+                ball_y -= 20
+                ball_dx *= 1
+                ball_dy *= -1
+            if paddle_4Y < ball_y < paddle_4Y + 50 and ball_x == 860:
+                ball_x -= 20
+                ball_y -= 20
+                ball_dx *= -1
+                ball_dy *= -1
+            elif paddle_4Y + 50 <= ball_y < paddle_4Y + 100 and ball_x == 860:
+                ball_x -= 20
+                ball_y += 20
+                ball_dx *= -1
+                ball_dy *= 1
 
-        if paddle_4Y < ball_y < paddle_4Y + 100 and ball_x == 860:
-            ball_x = ball_x - 20
-            ball_dx *= -1
+        elif ball_dx < 0 and ball_dy > 0:
+            if paddle_1X - 10 < ball_x < paddle_1X + 50 and ball_y == 30:
+                ball_x -= 20
+                ball_y += 20
+                ball_dx *= 1
+                ball_dy *= -1
+            elif paddle_1X + 50 <= ball_x <= paddle_1X + 100 and ball_y == 30:
+                ball_x += 20
+                ball_y += 20
+                ball_dx *= -1
+                ball_dy *= -1
+            if paddle_2Y < ball_y < paddle_2Y + 50 and ball_x == 330:
+                ball_x += 20
+                ball_y -= 20
+                ball_dx *= -1
+                ball_dy *= 1
+            elif paddle_2Y + 50 <= ball_y < paddle_2Y + 100 and ball_x == 330:
+                ball_x += 20
+                ball_y += 20
+                ball_dx *= -1
+                ball_dy *= -1
+
+        elif ball_dx < 0 and ball_dy < 0:
+            if paddle_2Y < ball_y < paddle_2Y + 50 and ball_x == 330:
+                ball_x += 20
+                ball_y -= 20
+                ball_dx *= -1
+                ball_dy *= -1
+            elif paddle_2Y + 50 <= ball_y < paddle_2Y + 100 and ball_x == 330:
+                ball_x += 20
+                ball_y += 20
+                ball_dx *= -1
+                ball_dy *= 1
+            if paddle_3X < ball_x < paddle_3X + 50 and ball_y == 560:
+                ball_x += 20
+                ball_y -= 20
+                ball_dx *= 1
+                ball_dy *= -1
+            elif paddle_3X + 50 <= ball_x < paddle_3X + 100 and ball_y == 560:
+                ball_x -= 20
+                ball_y -= 20
+                ball_dx *= -1
+                ball_dy *= -1
 
         if ball_x > 900:
             ball_x = 600
-            ball_y = 300
+            ball_y = 250
             paddle_4_score -= 1
             print(paddle_4_score)
         if ball_x < 300:
             ball_x = 600
-            ball_y = 300
+            ball_y = 250
             paddle_2_score -= 1
             print(paddle_2_score)
         if ball_y < 0:
             ball_x = 600
-            ball_y = 300
+            ball_y = 250
             paddle_1_score -= 1
             print(paddle_1_score)
         if ball_y > 600:
             ball_x = 600
-            ball_y = 300
+            ball_y = 250
             paddle_3_score -= 1
             print(paddle_3_score)
+        # elif ball_dx <= 0:
+        #
+        #     if paddle_1X < ball_x < paddle_1X + 50 and ball_y == 40:
+        #         ball_y = ball_y + 20
+        #         ball_dy *= -1
+        #
+        #     if paddle_1X + 50 < ball_x < paddle_1X + 100 and ball_y == 40:
+        #         if ball_dy > 0:
+        #             ball_x += 20
+        #             ball_y += 20
+        #             ball_dy *= -1
+        #             ball_dx *= -1
+        #         else:
+        #             ball_x -= 20
+        #             ball_y += 20
+        #             ball_dy *= -1
+        #             ball_dx *= -1
+        #
+        #     if paddle_2Y + 10 < ball_y < paddle_2Y + 100 and ball_x == 330:
+        #         ball_x = ball_x + 20
+        #         ball_dx *= -1
+        #
+        #     if paddle_3X < ball_x < paddle_3X + 50 and ball_y == 560:
+        #         ball_y = ball_y - 20
+        #         ball_dy *= -1
+        #
+        #     if paddle_3X + 50 < ball_x < paddle_3X + 100 and ball_y == 560:
+        #         if ball_dy > 0:
+        #             ball_x -= 20
+        #             ball_y -= 20
+        #             ball_dy *= -1
+        #             ball_dx *= -1
+        #
+        #         else:
+        #             ball_x += 20
+        #             ball_y -= 20
+        #             ball_dy *= -1
+        #             ball_dx *= -1
+        #
+        #     if paddle_4Y < ball_y < paddle_4Y + 100 and ball_x == 860:
+        #         ball_x = ball_x - 20
+        #         ball_dx *= -1
 
         text(25, 175, 395, str(paddle_1_score), (255, 255, 255))
         text(25, 175, 445, str(paddle_2_score), (255, 255, 255))
@@ -266,7 +352,7 @@ def main():
             pygame.draw.rect(screen, (0, 0, 255), back_button_light)
             if click[0] == 1:
                 ball_x = 600
-                ball_y = 500
+                ball_y = 250
                 intro()
         else:
             back_button_normal = pygame.Rect(95, 50, 110, 60)
