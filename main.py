@@ -143,6 +143,13 @@ def how_to_play_screen():
         
 
         pygame.display.update()
+
+# def scoring():
+    # paddle_1_score = 10
+    # paddle_1_score = 10
+    # paddle_1_score = 10
+    # paddle_1_score = 10
+
 ball_x = 600
 ball_y = 500
 ball_dx = 10
@@ -153,6 +160,10 @@ ball_dy = 10
 
 # Game loop
 def main():
+    paddle_1_score = 10
+    paddle_2_score = 10
+    paddle_3_score = 10
+    paddle_4_score = 10
     global ball_dx, ball_dy, paddle_1X, ball_x, ball_y
     running = True
     while running:
@@ -160,6 +171,12 @@ def main():
         screen.fill((128, 128, 128))
         draw_game_background()
         draw_paddles()
+
+        pygame.draw.rect(screen, (255, 0, 0), (50, 400, 90, 15))
+        pygame.draw.rect(screen, (0, 255, 0), (50, 450, 90, 15))
+        pygame.draw.rect(screen, (0, 0, 255), (50, 500, 90, 15))
+        pygame.draw.rect(screen, (255, 255, 0), (50, 550, 90, 15))
+
         pygame.draw.circle(screen, (255, 255, 255), [ball_x, ball_y], 10)
         ball_x = ball_x + ball_dx
         ball_y = ball_y - ball_dy
@@ -180,6 +197,26 @@ def main():
             ball_x = ball_x - 20
             ball_dx *= -1
 
+        if ball_x > 900:
+            ball_x = 600
+            ball_y = 300
+            paddle_4_score -= 1
+            print(paddle_4_score)
+        if ball_x < 300:
+            ball_x = 600
+            ball_y = 300
+            paddle_2_score -= 1
+            print(paddle_2_score)
+        if ball_y < 0:
+            ball_x = 600
+            ball_y = 300
+            paddle_1_score -= 1
+            print(paddle_1_score)
+        if ball_y > 600:
+            ball_x = 600
+            ball_y = 300
+            paddle_3_score -= 1
+            print(paddle_3_score)
 
 
 
