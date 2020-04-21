@@ -101,22 +101,22 @@ def draw_paddles():
             if event.key == pygame.K_b:
                 intro()
 
-        if paddle_1X + 90 > 900:
-            paddle_1X = 810
-        if paddle_1X < 300:
-            paddle_1X = 300
-        if paddle_2Y + 90 > 600:
-            paddle_2Y = 510
-        if paddle_2Y < 0:
-            paddle_2Y = 0
-        if paddle_3X + 90 > 900:
-            paddle_3X = 810
-        if paddle_3X < 300:
-            paddle_3X = 300
-        if paddle_4Y + 90 > 600:
-            paddle_4Y = 510
-        if paddle_4Y < 0:
-            paddle_4Y = 0
+        if paddle_1X + 90 > 865:
+            paddle_1X = 775
+        if paddle_1X < 335:
+            paddle_1X = 335
+        if paddle_2Y + 90 > 565:
+            paddle_2Y = 475
+        if paddle_2Y < 35:
+            paddle_2Y = 35
+        if paddle_3X + 90 > 865:
+            paddle_3X = 775
+        if paddle_3X < 335:
+            paddle_3X = 335
+        if paddle_4Y + 90 > 565:
+            paddle_4Y = 475
+        if paddle_4Y < 35:
+            paddle_4Y = 35
 
 def text(font_size, x, y, text, color):
     text_font = pygame.font.Font('freesansbold.ttf', font_size)
@@ -185,7 +185,7 @@ def main():
             ball_y = ball_y + 20
             ball_dy *= -1
 
-        if paddle_2Y < ball_y < paddle_2Y + 100 and ball_x == 330:
+        if paddle_2Y < ball_y < paddle_2Y + 50 and ball_x == 330:
             ball_x = ball_x + 20
             ball_dx *= -1
 
@@ -217,6 +217,11 @@ def main():
             ball_y = 300
             paddle_3_score -= 1
             print(paddle_3_score)
+
+        text(25, 175, 395, str(paddle_1_score), (255, 255, 255))
+        text(25, 175, 445, str(paddle_2_score), (255, 255, 255))
+        text(25, 175, 495, str(paddle_3_score), (255, 255, 255))
+        text(25, 175, 545, str(paddle_4_score), (255, 255, 255))
 
 
 
