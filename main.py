@@ -181,17 +181,45 @@ def main():
         ball_x = ball_x + ball_dx
         ball_y = ball_y - ball_dy
 
-        if paddle_1X < ball_x < paddle_1X + 100 and ball_y == 30:
+        print(paddle_1X)
+        print(ball_x)
+        if paddle_1X < ball_x < paddle_1X + 50 and ball_y == 40:
             ball_y = ball_y + 20
             ball_dy *= -1
 
-        if paddle_2Y < ball_y < paddle_2Y + 50 and ball_x == 330:
+        if paddle_1X + 50 < ball_x < paddle_1X + 100 and ball_y == 40:
+            if ball_dy > 0:
+                ball_x += 20
+                ball_y += 20
+                ball_dy *= -1
+                ball_dx *= -1
+            else:
+                ball_x -= 20
+                ball_y += 20
+                ball_dy *= -1
+                ball_dx *= -1
+
+
+
+        if paddle_2Y < ball_y < paddle_2Y + 100 and ball_x == 330:
             ball_x = ball_x + 20
             ball_dx *= -1
 
-        if paddle_3X < ball_x < paddle_3X + 100 and ball_y == 560:
+        if paddle_3X < ball_x < paddle_3X + 50 and ball_y == 560:
             ball_y = ball_y - 20
             ball_dy *= -1
+
+        if paddle_3X + 50 < ball_x < paddle_3X + 100 and ball_y == 560:
+            if ball_dy > 0:
+                ball_x += 20
+                ball_y -= 20
+                ball_dy *= -1
+                ball_dx *= -1
+            else:
+                ball_x -= 20
+                ball_y -= 20
+                ball_dy *= -1
+                ball_dx *= -1
 
         if paddle_4Y < ball_y < paddle_4Y + 100 and ball_x == 860:
             ball_x = ball_x - 20
