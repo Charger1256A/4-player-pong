@@ -1,4 +1,5 @@
 import pygame
+import random
 
 # Initialize pygame
 pygame.init()
@@ -101,22 +102,22 @@ def draw_paddles():
             if event.key == pygame.K_b:
                 intro()
 
-        if paddle_1X + 90 > 865:
-            paddle_1X = 775
-        if paddle_1X < 335:
-            paddle_1X = 335
-        if paddle_2Y + 90 > 565:
-            paddle_2Y = 475
-        if paddle_2Y < 35:
-            paddle_2Y = 35
-        if paddle_3X + 90 > 865:
-            paddle_3X = 775
-        if paddle_3X < 335:
-            paddle_3X = 335
-        if paddle_4Y + 90 > 565:
-            paddle_4Y = 475
-        if paddle_4Y < 35:
-            paddle_4Y = 35
+        if paddle_1X + 90 > 835:
+            paddle_1X = 745
+        if paddle_1X < 365:
+            paddle_1X = 365
+        if paddle_2Y + 90 > 535:
+            paddle_2Y = 445
+        if paddle_2Y < 65:
+            paddle_2Y = 65
+        if paddle_3X + 90 > 835:
+            paddle_3X = 745
+        if paddle_3X < 365:
+            paddle_3X = 365
+        if paddle_4Y + 90 > 535:
+            paddle_4Y = 445
+        if paddle_4Y < 65:
+            paddle_4Y = 65
 
 def text(font_size, x, y, text, color):
     text_font = pygame.font.Font('freesansbold.ttf', font_size)
@@ -151,9 +152,9 @@ def how_to_play_screen():
     # paddle_1_score = 10
 
 ball_x = 600
-ball_y = 450
-ball_dx = -10
-ball_dy = -10
+ball_y = 150
+ball_dx = 10
+ball_dy = 10
 
 
 
@@ -167,6 +168,8 @@ def main():
     global ball_dx, ball_dy, paddle_1X, ball_x, ball_y
     running = True
     while running:
+
+
         # Background Color
         screen.fill((128, 128, 128))
         draw_game_background()
@@ -178,8 +181,8 @@ def main():
         pygame.draw.rect(screen, (255, 255, 0), (50, 550, 90, 15))
 
         pygame.draw.circle(screen, (255, 255, 255), [ball_x, ball_y], 10)
-        ball_x = ball_x + ball_dx
-        ball_y = ball_y - ball_dy
+        ball_x = round(ball_x + ball_dx)
+        ball_y = round(ball_y - ball_dy)
 
 
         if ball_dx > 0 and ball_dy > 0:
@@ -273,21 +276,37 @@ def main():
             ball_x = 600
             ball_y = 250
             paddle_4_score -= 1
+            print("paddle 4")
+            print(ball_x)
+            print(ball_y)
             print(paddle_4_score)
         if ball_x < 300:
             ball_x = 600
             ball_y = 250
             paddle_2_score -= 1
+            print("paddle 2")
+            print(ball_x)
+            print(ball_y)
             print(paddle_2_score)
         if ball_y < 0:
             ball_x = 600
             ball_y = 250
             paddle_1_score -= 1
+            print("paddle 1")
+            print(ball_x)
+            print(ball_y)
             print(paddle_1_score)
-        if ball_y > 600:
+        # if 430 >= ball_x >= 410 and ball_y == 600:
+        #     paddle_3_score += 1
+        #     print(paddle_3_score)
+        if ball_y > 605:
+            # print("paddle 3")
+            # print(ball_x)
+            # print(ball_y)
             ball_x = 600
             ball_y = 250
             paddle_3_score -= 1
+
             print(paddle_3_score)
         # elif ball_dx <= 0:
         #
