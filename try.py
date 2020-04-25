@@ -1,11 +1,16 @@
 import pygame
 import random
+import operator
 
 # Initialize pygame
 pygame.init()
 
 # Set up screen
 screen = pygame.display.set_mode((900, 600))
+
+# Load crown
+
+crown = pygame.image.load('crown.png')
 
 # Paddle positions
 paddle_1X = 555
@@ -140,8 +145,40 @@ def how_to_play_screen():
         text(16, 50, 200, "side it went out on loses a point", (255, 255, 255))
         text(16, 50, 220, "Then the round ends and the ball will ", (255, 255, 255))
         text(16, 50, 240, "reapper on the center of the screen.", (255, 255, 255))
-        text(16, 50, 260, "At the end of 10 rounds whoever as the most points wins", (255, 255, 255))
-        
+        text(16, 50, 260, "At the end of 10 rounds whoever has", (255, 255, 255))
+        text(16, 50, 280, "the most points wins. The game can also", (255, 255, 255))
+        text(16, 50, 300, "when the time limit is reached,", (255, 255, 255))
+        text(16, 50, 320, "so don't be shocked if the game ends", (255, 255, 255))
+        text(16, 50, 340, "in the middle of the round. It is also", (255, 255, 255))
+        text(16, 50, 360, "important to know that the physics", (255, 255, 255))
+        text(16, 50, 380, "of this game is really wacky to make", (255, 255, 255))
+        text(16, 50, 400, "the game more fun.", (255, 255, 255))
+        text(32, 450, 80, "Controls:", (255,255,255))
+        text(16, 550, 140, "Left - a  Right - d",(255,255,255))
+        text(16, 550, 190, "Up - esc  Down - `", (255, 255, 255))
+        text(16, 550, 240, "Left - left arrow  Right - right arrow", (255, 255, 255))
+        text(16, 550, 290, "Up - o  Down - l", (255, 255, 255))
+
+
+
+        pygame.draw.rect(screen, (255, 0, 0), (450, 140, 90, 15))
+        pygame.draw.rect(screen, (0, 255, 0), (450, 190, 90, 15))
+        pygame.draw.rect(screen, (0, 0, 255), (450, 240, 90, 15))
+        pygame.draw.rect(screen, (255, 255, 0), (450, 290, 90, 15))
+
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if 840 > mouse[0] > 780 and 590 > mouse[1] > 530:
+            button_2_light = pygame.Rect(780, 530, 110, 60)
+            pygame.draw.rect(screen, (255, 0, 0), button_2_light)
+            if click[0] == 1:
+                intro()
+        else:
+            button_2_normal = pygame.Rect(780, 530, 110, 60)
+            pygame.draw.rect(screen, (200, 0, 0), button_2_normal)
+
+        text(14, 815, 555, "Back", (0, 0, 0))
 
         pygame.display.update()
 
@@ -157,10 +194,114 @@ ball_dx = 10
 ball_dy = 10
 
 
+def end_screen(red_score, blue_score, green_score, yellow_score):
+    running = True
+    while running:
+        screen.fill((128, 128, 128))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+        text(50, 300, 50, "Rankings:", (255, 255, 0))
+        text(32, 320, 150, "1.", (0,0,0))
+        text(32, 320, 250, "2.", (0, 0, 0))
+        text(32, 320, 350, "3.", (0, 0, 0))
+        text(32, 320, 450, "4.", (0, 0, 0))
+
+        ranking(red_score, green_score, blue_score, yellow_score)
+
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if 840 > mouse[0] > 780 and 590 > mouse[1] > 530:
+            button_2_light = pygame.Rect(780, 530, 110, 60)
+            pygame.draw.rect(screen, (255, 0, 0), button_2_light)
+            if click[0] == 1:
+                intro()
+        else:
+            button_2_normal = pygame.Rect(780, 530, 110, 60)
+            pygame.draw.rect(screen, (200, 0, 0), button_2_normal)
+
+        text(14, 815, 555, "Back", (0, 0, 0))
+
+        screen.blit(crown, (395, 120))
+
+        pygame.display.update()
+
+def ranking(red_score, blue_score, green_score, yellow_score):
+    scores = {
+        "red": red_score,
+        "blue": blue_score,
+        "green": green_score,
+        "yellow": yellow_score
+    }
+
+    sorted_scores = sorted(scores.items(), key=operator.itemgetter(1))
+    # print(sorted_scores)
+    def Convert(tup, di):
+        for a, b in tup:
+            di.setdefault(a, []).append(b)
+        # print(di)
+        def getList(dict):
+            return dict.keys()
+
+        keys = getList(di)
+        k = list(keys)
+        # print(keys)
+
+        # print(k[0])
+        draw_rankings(k[3], k[2], k[1], k[0])
+        return di
+
+
+    dictionary = {}
+    Convert(sorted_scores, dictionary)
+
+def draw_rankings(first, second, third, fourth):
+
+    if first == "red":
+        first_color = (255, 0, 0)
+    if first == "green":
+        first_color = (0, 255, 0)
+    if first == "blue":
+        first_color = (0, 0, 255)
+    if first == "yellow":
+        first_color = (255, 255, 0)
+    if second == "red":
+        second_color = (255, 0, 0)
+    if second == "green":
+        second_color = (0, 255, 0)
+    if second == "blue":
+        second_color = (0, 0, 255)
+    if second == "yellow":
+        second_color = (255, 255, 0)
+    if third == "red":
+        third_color = (255, 0, 0)
+    if third == "green":
+        third_color = (0, 255, 0)
+    if third == "blue":
+        third_color = (0, 0, 255)
+    if third == "yellow":
+        third_color = (255, 255, 0)
+    if fourth == "red":
+        fourth_color = (255, 0, 0)
+    if fourth == "green":
+        fourth_color = (0, 255, 0)
+    if fourth == "blue":
+        fourth_color = (0, 0, 255)
+    if fourth == "yellow":
+        fourth_color = (255, 255, 0)
+
+    pygame.draw.rect(screen, first_color, (360, 160, 90, 15))
+    pygame.draw.rect(screen, second_color, (360, 260, 90, 15))
+    pygame.draw.rect(screen, third_color, (360, 360, 90, 15))
+    pygame.draw.rect(screen, fourth_color, (360, 460, 90, 15))
 
 
 # Game loop
 def main():
+    timer = 0
+    timer += 1
     paddle_1_score = 10
     paddle_2_score = 10
     paddle_3_score = 10
@@ -236,7 +377,7 @@ def main():
                 ball_dy *= -1
             elif paddle_1X + 50 <= ball_x <= paddle_1X + 100 and ball_y == 30:
                 ball_x += 20
-                ball_y += 20
+                ball_y += 60
                 ball_dx *= -1
                 ball_dy *= -1
             if paddle_2Y < ball_y < paddle_2Y + 50 and ball_x == 330:
@@ -274,28 +415,34 @@ def main():
 
         if ball_x > 900:
             ball_x = 600
-            ball_y = 250
+            ball_y = 150
+            ball_dx = 10
+            ball_dy = 10
             paddle_4_score -= 1
-            print("paddle 4")
-            print(ball_x)
-            print(ball_y)
-            print(paddle_4_score)
+            # print("paddle 4")
+            # print(ball_x)
+            # print(ball_y)
+            # print(paddle_4_score)
         if ball_x < 300:
             ball_x = 600
-            ball_y = 250
+            ball_y = 150
+            ball_dx = 10
+            ball_dy = 10
             paddle_2_score -= 1
-            print("paddle 2")
-            print(ball_x)
-            print(ball_y)
-            print(paddle_2_score)
+            # print("paddle 2")
+            # print(ball_x)
+            # print(ball_y)
+            # print(paddle_2_score)
         if ball_y < 0:
             ball_x = 600
-            ball_y = 250
+            ball_y = 150
+            ball_dx = 10
+            ball_dy = 10
             paddle_1_score -= 1
-            print("paddle 1")
-            print(ball_x)
-            print(ball_y)
-            print(paddle_1_score)
+            # print("paddle 1")
+            # print(ball_x)
+            # print(ball_y)
+            # print(paddle_1_score)
         # if 430 >= ball_x >= 410 and ball_y == 600:
         #     paddle_3_score += 1
         #     print(paddle_3_score)
@@ -304,10 +451,16 @@ def main():
             # print(ball_x)
             # print(ball_y)
             ball_x = 600
-            ball_y = 250
+            ball_y = 150
+            ball_dx = 10
+            ball_dy = 10
             paddle_3_score -= 1
 
-            print(paddle_3_score)
+            # print(paddle_3_score)
+
+        if paddle_1_score + paddle_2_score + paddle_3_score + paddle_4_score == 30 or timer > 10000:
+            end_screen(paddle_1_score, paddle_2_score, paddle_3_score, paddle_4_score)
+
         # elif ball_dx <= 0:
         #
         #     if paddle_1X < ball_x < paddle_1X + 50 and ball_y == 40:
@@ -351,10 +504,11 @@ def main():
         #         ball_x = ball_x - 20
         #         ball_dx *= -1
 
-        text(25, 175, 395, str(paddle_1_score), (255, 255, 255))
-        text(25, 175, 445, str(paddle_2_score), (255, 255, 255))
-        text(25, 175, 495, str(paddle_3_score), (255, 255, 255))
-        text(25, 175, 545, str(paddle_4_score), (255, 255, 255))
+        text(25, 175, 395, str(paddle_1_score) + "  -  a d", (255, 255, 255))
+        text(25, 175, 445, str(paddle_2_score) + "  - esc `", (255, 255, 255))
+        text(25, 175, 495, str(paddle_3_score) + "- arrows", (255, 255, 255))
+        text(25, 175, 545, str(paddle_4_score) + "  -  o l", (255, 255, 255))
+
 
 
 
@@ -371,7 +525,9 @@ def main():
             pygame.draw.rect(screen, (0, 0, 255), back_button_light)
             if click[0] == 1:
                 ball_x = 600
-                ball_y = 250
+                ball_y = 150
+                ball_dx = 10
+                ball_dy = 10
                 intro()
         else:
             back_button_normal = pygame.Rect(95, 50, 110, 60)
